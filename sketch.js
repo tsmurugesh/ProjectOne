@@ -49,6 +49,14 @@ var drawFunction;
 var midX;
 var midY;
 
+//room enter booleans
+var countMoneyEnter = true;
+var menuBoardEnter = true;
+var cupStackEnter = true;
+var fillTeaEnter = true;
+var cleanSpillEnter = true;
+var count = 0;
+
 // offset from bottom of screen
 var gTextOffset = 100;
 
@@ -58,7 +66,7 @@ function preload() {
     images[1] = loadImage('assets/room1.png');
     
     inst[0] = loadImage('assets/index.png');
-    inst[0] = loadImage('assets/room1_text.png');
+    inst[1] = loadImage('assets/room1_text.png');
 
 }
 
@@ -134,10 +142,27 @@ drawTeaSteepFail = function () {
     fill("red");
     text("tea steeping state, Failure page, send back to tea steep one",midX, midY);
 }
+
 drawTeaSteepFail = function () {
     //image(images[1], midX, midY, 600,600);
     fill("red");
     text("tea steeping state, success page, continue to room2 to do other tasks",midX, midY);
+}
+
+drawRoomTwo = function () {
+    image(images[1], midX, midY, 600, 600);
+    image(inst[0],140, 370, 120,200);
+    fill("white");
+    text("in room 2 \n click on the highilghted items to complete tasks", 1000, 370);
+
+}
+
+drawCountMoney = function () {
+    count++;
+    countMoneyEnter = false;
+    fill("red");
+    text("counting money screen",midX, midY);
+
 }
 
 
@@ -159,12 +184,23 @@ drawTeaSteepFail = function () {
 function keyTyped() {
     if (key === '1') {
         drawFunction = drawOutside;
-    } else if (key === '2') {
+    }else if (key === '2') {
         drawFunction = drawRoomOne;
+    }else if (key === '3') {
+        drawFunction = drawRoomTwo;
     }
+    
     if (drawFunction === drawRoomOne){
         if (key === 'p'){
             drawFunction = drawBobaCook;
+        } 
+    }
+}
+
+function keyPressed(){
+    if (drawFunction === drawCountMoney){
+        if (keyCode === BACKSPACE){
+            drawFunction = drawRoomTwo;
         } 
     }
 }
@@ -177,12 +213,18 @@ function mousePressed() {
                 drawFunction = drawRoomOne;
             } 
         }
-    }
-    
-    if (drawFunction === drawRoomOne) {
+    }else if (drawFunction === drawRoomOne) {
         if (mouseX > 330 && mouseX < 400) {
             if (mouseY > 370 && mouseY < 430) {
                 drawFunction = drawTeaSteepOne;
+            } 
+        }
+    }else if (drawFunction === drawRoomTwo) {
+        if (mouseX > 503 && mouseX < 620) { // click on cashier machine
+            if (mouseY > 500 && mouseY < 550) {
+                if(countMoneyEnter == true){
+                    drawFunction = drawCountMoney;
+                }
             } 
         }
     }
