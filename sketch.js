@@ -54,7 +54,6 @@ var countMoneyEnter = true;
 var menuBoardEnter = true;
 var cupStackEnter = true;
 var fillTeaEnter = true;
-var cleanSpillEnter = true;
 var count = 0;
 
 // offset from bottom of screen
@@ -158,12 +157,37 @@ drawRoomTwo = function () {
 }
 
 drawCountMoney = function () {
-    count++;
     countMoneyEnter = false;
     fill("red");
     text("counting money screen",midX, midY);
+}
+
+drawMenuBoard = function () {
+    menuBoardEnter = false;
+    fill("red");
+    text("menu board",midX, midY);
+}
+
+drawCupStack = function () {
+    cupStackEnter = false;
+    fill("red");
+    text("cup stacking",midX, midY);
+}
+
+drawFillTea = function () {
+    fillTeaEnter = false;
+    fill("red");
+    text("filling tea",midX, midY);
+}
+
+drawRoomThree = function () {
+    image(images[1], midX, midY, 600, 600);
+    image(inst[0],140, 370, 120,200);
+    fill("white");
+    text("in room 3 set the boba out!", 1000, 370);
 
 }
+
 
 
 
@@ -195,6 +219,9 @@ function keyTyped() {
             drawFunction = drawBobaCook;
         } 
     }
+//    else if (count >= 4){
+//        drawFunction = drawRoomThree; 
+//    }
 }
 
 function keyPressed(){
@@ -203,27 +230,72 @@ function keyPressed(){
             drawFunction = drawRoomTwo;
         } 
     }
+    else if (drawFunction === drawMenuBoard){
+        if (keyCode === BACKSPACE){
+            drawFunction = drawRoomTwo;
+        } 
+    }
+    else if (drawFunction === drawCupStack){
+        if (keyCode === BACKSPACE){
+            drawFunction = drawRoomTwo;
+        } 
+    }
+    else if (drawFunction === drawFillTea){
+        if (keyCode === BACKSPACE){
+            drawFunction = drawRoomTwo;
+        } 
+    }else if (drawFunction === drawRoomTwo){
+        if (keyCode === ENTER){
+            drawFunction = drawRoomThree;
+        }
+    }
 }
 
 function mousePressed() {
-    // only change state if we are in splash screen
-    if (drawFunction === drawOutside) {
+    if (drawFunction === drawOutside) { //click on door from outside to enter
         if (mouseX > 630 && mouseX < 700) {
             if (mouseY > 400 && mouseY < 580) {
                 drawFunction = drawRoomOne;
             } 
         }
-    }else if (drawFunction === drawRoomOne) {
+    }
+    else if (drawFunction === drawRoomOne) {
         if (mouseX > 330 && mouseX < 400) {
             if (mouseY > 370 && mouseY < 430) {
                 drawFunction = drawTeaSteepOne;
             } 
         }
-    }else if (drawFunction === drawRoomTwo) {
+    }
+    else if (drawFunction === drawRoomTwo) {
         if (mouseX > 503 && mouseX < 620) { // click on cashier machine
             if (mouseY > 500 && mouseY < 550) {
                 if(countMoneyEnter == true){
+                    count++;
                     drawFunction = drawCountMoney;
+                }
+            } 
+        }
+        else if (mouseX > 630 && mouseX < 750) { // click on menu board
+            if (mouseY > 175 && mouseY < 270) {
+                if(menuBoardEnter == true){
+                    count++;
+                    drawFunction = drawMenuBoard;
+                }
+            } 
+        }
+        else if (mouseX > 611 && mouseX < 644) { // click on cups
+            if (mouseY > 270 && mouseY < 340) {
+                if(cupStackEnter == true){
+                    count++;
+                    drawFunction = drawCupStack;
+                }
+            } 
+        }
+        else if (mouseX > 715 && mouseX < 780) { // fill tea
+            if (mouseY > 330 && mouseY < 415) {
+                if(fillTeaEnter == true){
+                    count++;
+                    drawFunction = drawFillTea;
                 }
             } 
         }
