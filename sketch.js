@@ -37,7 +37,6 @@
 var images = [];
 var inst = [];
 
-
 // easing variables 
 var a = 1;
 var b = 1;
@@ -57,7 +56,6 @@ var cupStackEnter = true;
 var fillTeaEnter = true;
 var count = 0;
 var leafCount = 0
-var waitForClick;
 
 // offset from bottom of screen
 var gTextOffset = 100;
@@ -69,6 +67,7 @@ function preload() {
     images[2] = loadImage('assets/room2.png');
     images[3] = loadImage('assets/room3.png');
     images[4] = loadImage('assets/room4.png');
+    images[5] = loadImage('assets/open.png');
     
     inst[0] = loadImage('assets/index.png');
     inst[1] = loadImage('assets/room1_text.png');
@@ -77,7 +76,7 @@ function preload() {
 
 // Center drawing, drawFunction will be one for default
 function setup() {
-    createCanvas(1200,750);
+    createCanvas( 1200, 750 );
 
     // Center our drawing objects
     imageMode(CENTER);
@@ -109,28 +108,28 @@ function draw() {
 
 //-- drawOne() will draw the image at index 0 from the array
 drawOutside = function () {
-    image(images[0], midX, midY, 600, 600);
+    image(images[0], midX, midY);
     fill("white");
     //rect(midX+80 , midY+80, 100,200);
-    //text("welcome to your shift at the boba shop!\n click the door to enter",midX + 340, midY - 100);
-    image(inst[0],midX + 340,370, 120,200);
+    text("welcome to your shift at the boba shop!\n Press the up arrow to enter", 150, 50);
+    //image(inst[0],midX + 340,370, 120,200);
 
 
 }
 
 //-- drawTwo() will draw the image at index 1 from the array
 drawRoomOne = function () {
-    image(images[1], midX, midY, 600, 600);
+    image(images[1], midX, midY);
     image(inst[0],140, 370, 120,200);
     fill("white");
-    text("1. press 'q' to cook boba \n 2. press 'p' to steep the tea", 1000, 370);
+    text("1. press 'q' to cook boba \n 2. press 'p' to steep the tea",150,50);
 
 }
 
 drawBobaCook = function () {
     //image(images[1], midX, midY, 600,600);
     fill("red");
-    text("boba cooking state",midX, midY);
+    text("boba cooking state, press enter when done",midX, midY);
 }
 
 drawTeaSteepOne = function () {
@@ -141,84 +140,75 @@ drawTeaSteepOne = function () {
 
         if ( simpleTimer.expired() ){
             if ( leafCount < 5 ){
-                text("FAIL, PRESS click to try again" ,midX, midY);
+                text("FAIL, PRESS click anywhere to try again" ,midX, midY);
                 if (mouseIsPressed){
                     simpleTimer.start();
                 }
             }
             else{
-                text("WIN PRESS anything TO CONTINUE",midX, midY);
+                text("WIN PRESS ANY KEY TO CONTINUE",midX, midY);
                 if (keyIsPressed){
                     drawFunction = drawRoomTwo;
                 }
             }
         }
         else {
-            text("tea steeping state, click the 5 leaves before the time runs out! click to begin", midX, midY-100);
+            text("tea steeping state, click the 5 leaves before the time runs out!", midX, midY-100);
 
         }
 }
-//drawTeaSteepTwo = function () {
-//    //image(images[1], midX, midY, 600,600);
-//    fill("red");
-//    
-//    //if count == x gp here, else fail and go here
-//}
-//drawTeaSteepFail = function () {
-//    //image(images[1], midX, midY, 600,600);
-//    fill("red");
-//    text("tea steeping state, Failure page, send back to tea steep one",midX, midY);
-//}
-//
-//drawTeaSteepWin = function () {
-//    //image(images[1], midX, midY, 600,600);
-//    fill("red");
-//    text("tea steeping state, success page, continue to room2 to do other tasks",midX, midY);
-//}
 
 drawRoomTwo = function () {
-    image(images[2], midX, midY, 600, 600);
+    image(images[2], midX, midY);
     image(inst[0],140, 370, 120,200);
     fill("white");
-    text("in room 2 \n click on the highilghted items to complete tasks. once the 4 tasks are completed, press left w", 1000, 370);
+    text("in room 2 \n click on the highilghted items to complete tasks. \n once the 4 tasks are completed, press w \n remmeber once you finish a task you cannot redo it, so make sure you do it well! ",150,50);
 }
 
 drawCountMoney = function () {
     countMoneyEnter = false;
     fill("red");
-    text("counting money screen",midX, midY);
+    text("counting money screen, press delete to finish",midX, midY);
 }
 
 drawMenuBoard = function () {
     menuBoardEnter = false;
     fill("red");
-    text("menu board",midX, midY);
+    text("menu board, press delete to finish",midX, midY);
 }
 
 drawCupStack = function () {
     cupStackEnter = false;
     fill("red");
-    text("cup stacking",midX, midY);
+    text("cup stacking, press delete to finish",midX, midY);
 }
 
 drawFillTea = function () {
     fillTeaEnter = false;
     fill("red");
-    text("filling tea",midX, midY);
+    text("filling tea, press delete to finish",midX, midY);
 }
 
 drawRoomThree = function () {
-    image(images[3], midX, midY, 600, 600);
+    image(images[3], midX, midY);
     fill("white");
-    text("in room 3 set the boba out, press 'o'!", 1000, 370);
+    text("in room 3 \n to set the boba out press 'o'!",150,50);
 
 }
 
 drawRoomFour = function () {
-    image(images[4], midX, midY, 600, 600);
+    image(images[4], midX, midY);
     fill("white");
-    text("in room 4 great everything is all set up! press the DOWN ARROW to go outside and flip the sign!", 1000, 370);
+    text("in room 4  \n great everything is all set up! press the DOWN ARROW to go outside and flip the sign!",150,50);
 
+}
+
+drawOpen = function () {
+    image(images[5], midX, midY);
+    fill("white");
+    //rect(midX+80 , midY+80, 100,200);
+    text("thanks for being such a good employee. its now open!", 150, 50);
+    //image(inst[0],midX + 340,370, 120,200);
 }
 
 
@@ -245,6 +235,9 @@ function keyTyped() {
         drawFunction = drawRoomOne;
     }else if (key === '3') {
         drawFunction = drawRoomTwo;
+    }
+    else if (key === '4') {
+        drawFunction = drawOpen;
     }
     
     if (drawFunction === drawRoomOne){
@@ -277,6 +270,11 @@ function keyPressed(){
             drawFunction = drawRoomOne;
         } 
     }
+    else if (drawFunction === drawBobaCook){
+        if (keyCode === ENTER){
+            drawFunction = drawRoomOne;
+        } 
+    }
     else if (drawFunction === drawCountMoney){
         if (keyCode === BACKSPACE){
             drawFunction = drawRoomTwo;
@@ -296,9 +294,15 @@ function keyPressed(){
         if (keyCode === BACKSPACE){
             drawFunction = drawRoomTwo;
         } 
-    }else if (drawFunction === drawRoomTwo){
+    }
+    else if (drawFunction === drawRoomTwo){
         if (keyCode === ENTER){
             drawFunction = drawRoomThree;
+        }
+    }
+    else if (drawFunction === drawRoomFour){
+        if (keyCode === DOWN_ARROW){
+            drawFunction = drawOutside;
         }
     }
 }
