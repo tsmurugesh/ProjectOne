@@ -35,6 +35,8 @@
 
 // Array of images
 var images = [];
+var inst = [];
+
 
 // easing variables 
 var a = 1;
@@ -54,6 +56,8 @@ var gTextOffset = 100;
 function preload() {
     images[0] = loadImage('assets/outside.png');
     images[1] = loadImage('assets/room1.png');
+    
+    inst[0] = loadImage('assets/index.png');
 
 }
 
@@ -92,8 +96,9 @@ function draw() {
 drawOutside = function () {
     image(images[0], midX, midY, 600, 600);
     fill("white");
-    rect(midX + 340, midY - 100, 100,200);
-    text("welcome to your shift at the boba shop!\n click the door to enter",midX + 340, midY - 100);
+    //rect(midX + 340, midY - 100, 100,200);
+    //text("welcome to your shift at the boba shop!\n click the door to enter",midX + 340, midY - 100);
+    image(inst[0],midX + 340, midY - 100, 120,200);
 
 
 }
