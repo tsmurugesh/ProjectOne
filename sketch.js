@@ -48,6 +48,7 @@ var cursor;
 var drawFunction;
 var midX;
 var midY;
+var simpleTimer;
 
 //room enter booleans
 var countMoneyEnter = true;
@@ -55,6 +56,8 @@ var menuBoardEnter = true;
 var cupStackEnter = true;
 var fillTeaEnter = true;
 var count = 0;
+var leafCount = 0
+var waitForClick;
 
 // offset from bottom of screen
 var gTextOffset = 100;
@@ -78,7 +81,9 @@ function setup() {
     textAlign(CENTER);
     rectMode(CENTER);
     textSize(30);
-    // easing information
+    
+    //timer stuff
+    simpleTimer = new Timer(3000);
 
     // set to one for startup
     drawFunction = drawOutside;
@@ -129,20 +134,40 @@ drawBobaCook = function () {
 drawTeaSteepOne = function () {
     //image(images[1], midX, midY, 600,600);
     fill("red");
-    text("tea steeping state, press start!",midX, midY);
+    //text("tea steeping state, press start!",midX, midY);
+
+    text("tea steeping state, click the 5 leaves before the time runs out! click to begin", midX, midY+100);
+        text( Math.round(simpleTimer.getRemainingTime()), 100, 100 );
+
+        if ( simpleTimer.expired() ){
+            if ( leafCount < 5 ){
+                text("FAIL, PRESS click to try again" ,midX, midY);
+                if (mouseIsPressed){
+                    simpleTimer.start();
+                }
+            }
+            else{
+                text("WIN PRESS anything TO CONTINUE",midX, midY);
+                if (keyIsPressed){
+                    drawFunction = drawRoomTwo;
+                }
+            
+        }
+    }
 }
-drawTeaSteepTwo = function () {
-    //image(images[1], midX, midY, 600,600);
-    fill("red");
-    text("tea steeping state, timer will be here!",midX, midY);
-}
+//drawTeaSteepTwo = function () {
+//    //image(images[1], midX, midY, 600,600);
+//    fill("red");
+//    
+//    //if count == x gp here, else fail and go here
+//}
 drawTeaSteepFail = function () {
     //image(images[1], midX, midY, 600,600);
     fill("red");
     text("tea steeping state, Failure page, send back to tea steep one",midX, midY);
 }
 
-drawTeaSteepFail = function () {
+drawTeaSteepWin = function () {
     //image(images[1], midX, midY, 600,600);
     fill("red");
     text("tea steeping state, success page, continue to room2 to do other tasks",midX, midY);
@@ -153,7 +178,6 @@ drawRoomTwo = function () {
     image(inst[0],140, 370, 120,200);
     fill("white");
     text("in room 2 \n click on the highilghted items to complete tasks", 1000, 370);
-
 }
 
 drawCountMoney = function () {
@@ -262,8 +286,14 @@ function mousePressed() {
     else if (drawFunction === drawRoomOne) {
         if (mouseX > 330 && mouseX < 400) {
             if (mouseY > 370 && mouseY < 430) {
+                simpleTimer.start();
                 drawFunction = drawTeaSteepOne;
             } 
+        }
+    }
+    else if (drawFunction === drawTeaSteepOne) {
+        if ( mouseIsPressed = true){
+            leafCount++;
         }
     }
     else if (drawFunction === drawRoomTwo) {
