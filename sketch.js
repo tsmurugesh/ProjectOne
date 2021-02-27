@@ -58,12 +58,13 @@ function preload() {
     images[1] = loadImage('assets/room1.png');
     
     inst[0] = loadImage('assets/index.png');
+    inst[0] = loadImage('assets/room1_text.png');
 
 }
 
 // Center drawing, drawFunction will be one for default
 function setup() {
-    createCanvas(windowWidth, windowHeight);
+    createCanvas(1200,800);
 
     // Center our drawing objects
     imageMode(CENTER);
@@ -96,9 +97,9 @@ function draw() {
 drawOutside = function () {
     image(images[0], midX, midY, 600, 600);
     fill("white");
-    //rect(midX + 340, midY - 100, 100,200);
+    //rect(midX+80 , midY+80, 100,200);
     //text("welcome to your shift at the boba shop!\n click the door to enter",midX + 340, midY - 100);
-    image(inst[0],midX + 340, midY - 100, 120,200);
+    image(inst[0],midX + 340,370, 120,200);
 
 
 }
@@ -106,13 +107,37 @@ drawOutside = function () {
 //-- drawTwo() will draw the image at index 1 from the array
 drawRoomOne = function () {
     image(images[1], midX, midY, 600, 600);
+    image(inst[0],140, 370, 120,200);
+    fill("white");
+    text("1. press 'p' to cook boba \n 2. click on the pot to steep the tea", 1000, 370);
 
 }
 
 drawBobaCook = function () {
     //image(images[1], midX, midY, 600,600);
     fill("red");
-    text("boba cooking state");
+    text("boba cooking state",midX, midY);
+}
+
+drawTeaSteepOne = function () {
+    //image(images[1], midX, midY, 600,600);
+    fill("red");
+    text("tea steeping state, press start!",midX, midY);
+}
+drawTeaSteepTwo = function () {
+    //image(images[1], midX, midY, 600,600);
+    fill("red");
+    text("tea steeping state, timer will be here!",midX, midY);
+}
+drawTeaSteepFail = function () {
+    //image(images[1], midX, midY, 600,600);
+    fill("red");
+    text("tea steeping state, Failure page, send back to tea steep one",midX, midY);
+}
+drawTeaSteepFail = function () {
+    //image(images[1], midX, midY, 600,600);
+    fill("red");
+    text("tea steeping state, success page, continue to room2 to do other tasks",midX, midY);
 }
 
 
@@ -137,12 +162,29 @@ function keyTyped() {
     } else if (key === '2') {
         drawFunction = drawRoomOne;
     }
+    if (drawFunction === drawRoomOne){
+        if (key === 'p'){
+            drawFunction = drawBobaCook;
+        } 
+    }
 }
 
 function mousePressed() {
     // only change state if we are in splash screen
-    if (drawFunction === drawSplash) {
-        drawFunction = drawInst;
+    if (drawFunction === drawOutside) {
+        if (mouseX > 630 && mouseX < 700) {
+            if (mouseY > 400 && mouseY < 580) {
+                drawFunction = drawRoomOne;
+            } 
+        }
+    }
+    
+    if (drawFunction === drawRoomOne) {
+        if (mouseX > 330 && mouseX < 400) {
+            if (mouseY > 370 && mouseY < 430) {
+                drawFunction = drawTeaSteepOne;
+            } 
+        }
     }
 }
 
@@ -150,5 +192,5 @@ function drawDebugInfo() {
     fill("red");
     textSize(15);
     text("x: " + mouseX + " y: " + mouseY, 100, height - 2);
-    text("x: " + midY + " y: " + midY, midX, midY);
+    //text("x: " + midY + " y: " + midY, midX, midY);
 }
