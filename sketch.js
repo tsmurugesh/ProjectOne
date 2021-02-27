@@ -36,11 +36,6 @@
 // Array of images
 var images = [];
 
-// Array of text
-var instructions  = [];
-var lineHeight = 50;
-var startY = 300;
-
 // easing variables 
 var a = 1;
 var b = 1;
@@ -49,236 +44,106 @@ var cursor;
 
 // variable that is a function 
 var drawFunction;
+var midX;
+var midY;
 
 // offset from bottom of screen
 var gTextOffset = 100;
 
 // load all images and text into an array
 function preload() {
-  images[0] = loadImage('assets/anger.png');
-  images[1] = loadImage('assets/ill.png');
-  images[2] = loadImage('assets/sleepy.png');
-  images[3] = loadImage('assets/stressed.png');
-  images[4] = loadImage('assets/vibe.png');
-  images[5] = loadImage('assets/splash.png');
-
-  instructions[0] = "☆welcome to my mood states!☆";
-  instructions[1] = "☆use 1-5 to look through the moods☆";
-  instructions[2] = "☆use 's' to go back to splash page☆";
-  instructions[3] = "☆use 'i' to remind yourself of the intructions☆";
-
-  cursor = loadImage('assets/cursor.png');
+    images[0] = loadImage('assets/outside.png');
+    images[1] = loadImage('assets/room1.png');
 
 }
 
 // Center drawing, drawFunction will be one for default
 function setup() {
-  createCanvas(800,800);
+    createCanvas(windowWidth, windowHeight);
 
-  // Center our drawing objects
-  imageMode(CENTER);
-  textAlign(CENTER);
-  textSize(30);
-  textFont("Fugaz One");
+    // Center our drawing objects
+    imageMode(CENTER);
+    textAlign(CENTER);
+    rectMode(CENTER);
+    textSize(30);
+    // easing information
 
-  // easing information
-
-  // set to one for startup
-  drawFunction = drawSplash;
+    // set to one for startup
+    drawFunction = drawOutside;
 }
 
 // Very simple, sets the background color and calls your state machine function
 // easing calculations
 function draw() {
-  background("#fbcd15");
+    background("#5fa4db");
+    midX = width / 2;
+    midY = height / 2;
 
-  mouseEasing();
+    //mouseEasing();
 
-  // will call your state machine function
-  drawFunction();
+    // will call your state machine function
+    drawFunction();
+    drawDebugInfo();
 }
 
 //========= TEMPLATE: modify these functions, INSIDE the function blocks only =========
 
 //-- drawOne() will draw the image at index 0 from the array
-drawOne = function() {
-   push();
-   textSize(50);
-   fill("#e8eff4");
-   noStroke();
-   text("anger", a, b);
-   pop();
+drawOutside = function () {
+    image(images[0], midX, midY, 600, 600);
+    fill("white");
+    rect(midX + 340, midY - 100, 100,200);
+    text("welcome to your shift at the boba shop!\n click the door to enter",midX + 340, midY - 100);
 
-   image(images[0], width/2, height/2);
 
-   push();
-   textSize(50);
-   stroke("#e8eff4");
-   strokeWeight(2);
-   noFill();
-   text("anger", a, b);
-   pop();
 }
 
 //-- drawTwo() will draw the image at index 1 from the array
-drawTwo = function() {
-   push();
-   textSize(50);
-   fill("#e8eff4");
-   noStroke();
-   text("ill", a, b);
-   pop();
-
-   image(images[1], width/2, height/2);
-
-   push();
-   textSize(50);
-   stroke("#e8eff4");
-   strokeWeight(2);
-   noFill();
-   text("ill", a, b);
-   pop();
+drawRoomOne = function () {
+    image(images[1], midX, midY, 600, 600);
 
 }
 
-//-- drawOne() will draw the image at index 2 from the array
-drawThree = function() {
-   push();
-   textSize(50);
-   fill("#e8eff4");
-   noStroke();
-   text("sleepy", a,b);
-   pop();
-
-   image(images[2], width/2, height/2);
-
-   push();
-   textSize(50);
-   stroke("#e8eff4");
-   strokeWeight(2);
-   noFill();
-   text("sleepy", a, b);
-   pop();
-
-}
-
-//-- drawOne() will draw the image at index 3 from the array
-drawFour = function() {
-   push();
-   textSize(50);
-   fill("#e8eff4");
-   noStroke();
-   text("stressed", a, b);
-   pop();
-
-   image(images[3], width/2, height/2);
-
-   push();
-   textSize(50);
-   stroke("#e8eff4");
-   strokeWeight(2);
-   noFill();
-   text("stressed", a, b);
-   pop();
-}
-
-//-- drawOne() will draw the image at index 4 from the array
-drawFive = function() {
-   push();
-   textSize(50);
-   fill("#e8eff4");
-   noStroke();
-   text("vibing", a, b);
-   pop();
-
-   image(images[4], width/2, height/2);
-
-   push();
-   textSize(50);
-   stroke("#e8eff4");
-   strokeWeight(2);
-   noFill();
-   text("vibing", a, b);
-   pop();
-
+drawBobaCook = function () {
+    //image(images[1], midX, midY, 600,600);
+    fill("red");
+    text("boba cooking state");
 }
 
 
-//-- drawSplash() will draw the image at index 4 from the array
-drawSplash = function() {
-  push();
-   textSize(50);
-   fill("#e8eff4");
-   noStroke();
-   text("click me", a, b);
-   pop();
-
-   image(images[5], width/2, height/2);
-
-   push();
-   textSize(50);
-   stroke("#e8eff4");
-   strokeWeight(2);
-   noFill();
-   text("click me", a, b);
-   pop();
-}
-
-//-- drawInst() will draw text array with the intructions
-drawInst = function(){
-  image(cursor, a, b);
-
-  fill("red");
-  for (let i = 0; i < instructions.length; i++ ){
-    text(instructions[i], width/2, startY + (i*lineHeight));
-  }
-}
 
 // mouse easing stuff all in one place
-function mouseEasing(){
-  let targetX = mouseX;
-  let dx = targetX - a;
-  a += dx * easing;
+// function mouseEasing(){
+//   let targetX = mouseX;
+//   let dx = targetX - a;
+//   a += dx * easing;
 
-  let targetY = mouseY;
-  let dy = targetY - b;
-  b += dy * easing;
-}
+//   let targetY = mouseY;
+//   let dy = targetY - b;
+//   b += dy * easing;
+// }
 
 //========= TEMPLATE: add or change interface functions, as you like =========
 
 // Change the drawFunction variable based on your interaction
 function keyTyped() {
-  if( drawFunction === drawSplash ) {
-    return;
-  }
-
-  if( key === '1' ) {
-  	drawFunction = drawOne;
-  }
-  else if( key === '2' ) {
-  	drawFunction = drawTwo;
-  }
-  else if( key === '3' ) {
-  	drawFunction = drawThree;
-  }
-  else if( key === '4' ) {
-  	drawFunction = drawFour;
-  }
-  else if( key === '5' ) {
-  	drawFunction = drawFive;
-  }
-  else if( key === 's' ) {
-    drawFunction = drawSplash;
-  }
-  else if( key === 'i' ) {
-    drawFunction = drawInst;
-  }
+    if (key === '1') {
+        drawFunction = drawOutside;
+    } else if (key === '2') {
+        drawFunction = drawRoomOne;
+    }
 }
 
 function mousePressed() {
-  // only change state if we are in splash screen
-  if( drawFunction === drawSplash ) {
-    drawFunction = drawInst;
-  }
+    // only change state if we are in splash screen
+    if (drawFunction === drawSplash) {
+        drawFunction = drawInst;
+    }
+}
+
+function drawDebugInfo() {
+    fill("red");
+    textSize(15);
+    text("x: " + mouseX + " y: " + mouseY, 100, height - 2);
+    text("x: " + midY + " y: " + midY, midX, midY);
 }
