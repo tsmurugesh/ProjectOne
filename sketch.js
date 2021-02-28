@@ -48,6 +48,7 @@ var drawFunction;
 var midX;
 var midY;
 var simpleTimer;
+var r = 1;
 
 //room enter booleans
 var countMoneyEnter = true;
@@ -68,6 +69,10 @@ function preload() {
     images[3] = loadImage('assets/room3.png');
     images[4] = loadImage('assets/room4.png');
     images[5] = loadImage('assets/open.png');
+    images[6] = loadImage('assets/potback.png');
+    images[7] = loadImage('assets/potfront.png');
+    images[8] = loadImage('assets/spoon.png');
+    images[9] = loadImage('assets/tea.png');
     
     inst[0] = loadImage('assets/index.png');
     inst[1] = loadImage('assets/room1_text.png');
@@ -127,9 +132,25 @@ drawRoomOne = function () {
 }
 
 drawBobaCook = function () {
-    //image(images[1], midX, midY, 600,600);
+    // limiting spoon mixing movement
+    var spoonX;
+    if (mouseX < 480){
+        spoonX = 480;
+    }
+    else if (mouseX > 715){
+        spoonX = 715;
+    }
+    else{
+        spoonX = mouseX;
+    }
+    
+    image(images[6], midX, midY);
+    image(images[8], spoonX, midY-100);
+    image(images[7], midX, midY);
+    
     fill("red");
     text("boba cooking state, press enter when done",midX, midY);
+    
 }
 
 drawTeaSteepOne = function () {
@@ -173,6 +194,17 @@ drawCountMoney = function () {
 
 drawMenuBoard = function () {
     menuBoardEnter = false;
+    push();
+    fill("white")
+    stroke("orange");
+    strokeWeight(10);
+    rect(midX,midY,600,400);
+    strokeWeight(3);
+    stroke(0);
+    if (mouseIsPressed === true) {
+        line(mouseX, mouseY, pmouseX, pmouseY);
+    }
+    pop();
     fill("red");
     text("menu board, press delete to finish",midX, midY);
 }
@@ -185,8 +217,18 @@ drawCupStack = function () {
 
 drawFillTea = function () {
     fillTeaEnter = false;
-    fill("red");
-    text("filling tea, press delete to finish",midX, midY);
+    noStroke();
+    fill("#d89663");
+    if (mouseIsPressed === true){
+        r=r+4;
+    }
+    rect(midX, midY+200, 200, r);
+    image(images[9], midX, midY);
+    fill("#5fa4db");
+    rect(midX, 750, 200, 175);
+
+    fill(0);
+    text("hold click to fill the pitcher, press delete to finish",midX, 600);
 }
 
 drawRoomThree = function () {
@@ -230,7 +272,7 @@ drawOpen = function () {
 // Change the drawFunction variable based on your interaction
 function keyTyped() {
     if (key === '1') {
-        drawFunction = drawOutside;
+        drawFunction = drawFillTea;
     }else if (key === '2') {
         drawFunction = drawRoomOne;
     }else if (key === '3') {
