@@ -57,6 +57,7 @@ var cupStackEnter = true;
 var fillTeaEnter = true;
 var count = 0;
 var leafCount = 0
+var tasksDone = false
 
 // offset from bottom of screen
 var gTextOffset = 100;
@@ -73,6 +74,7 @@ function preload() {
     images[7] = loadImage('assets/potfront.png');
     images[8] = loadImage('assets/spoon.png');
     images[9] = loadImage('assets/tea.png');
+    images[10] = loadImage('assets/outside2.png');
     
     inst[0] = loadImage('assets/index.png');
     inst[1] = loadImage('assets/room1_text.png');
@@ -113,10 +115,18 @@ function draw() {
 
 //-- drawOne() will draw the image at index 0 from the array
 drawOutside = function () {
-    image(images[0], midX, midY);
     fill("white");
-    //rect(midX+80 , midY+80, 100,200);
-    text("welcome to your shift at the boba shop!\n Press the up arrow to enter", 150, 50);
+    if (tasksDone === false){
+        image(images[0], midX, midY);
+        //rect(midX+80 , midY+80, 100,200);
+        text("welcome to your shift at the boba shop!\n Press the up arrow to enter", 150, 50);
+        
+    }
+    else if (tasksDone === true){
+        image(images[10], midX, midY);
+        //rect(midX+80 , midY+80, 100,200);
+        text("clickto flip the boba sign!", 150, 50);
+    }
     //image(inst[0],midX + 340,370, 120,200);
 
 
@@ -344,6 +354,7 @@ function keyPressed(){
     }
     else if (drawFunction === drawRoomFour){
         if (keyCode === DOWN_ARROW){
+            tasksDone = true; 
             drawFunction = drawOutside;
         }
     }
@@ -353,6 +364,15 @@ function mousePressed() {
     if (drawFunction === drawTeaSteepOne) {
         if ( mouseIsPressed = true){
             leafCount++;
+        }
+    }
+    else if (drawFunction === drawOutside){
+        if (tasksDone === true){
+            if (mouseX > 625 && mouseX < 750){
+                if (mouseY > 370 && mouseY < 550){
+                    drawFunction = drawOpen;
+                }
+            }
         }
     }
     else if (drawFunction === drawRoomTwo) {
