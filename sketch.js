@@ -262,10 +262,10 @@ drawCountMoney = function () {
 drawMenuBoard = function () {
     menuBoardEnter = false;
     push();
-    fill("white")
-    stroke("orange");
-    strokeWeight(10);
-    rect(midX, midY, 600, 400);
+//    fill("white")
+//    stroke("orange");
+//    strokeWeight(10);
+//    rect(midX, midY, 600, 400);
     strokeWeight(3);
     stroke(0);
     if (mouseIsPressed === true) {
@@ -275,6 +275,7 @@ drawMenuBoard = function () {
     fill("red");
     image(inst[17], 200,150);
     image(inst[14], 200,350);
+    count++;
     //text("menu board, press delete to finish", midX, midY);
 }
 
@@ -288,6 +289,8 @@ drawCupStack = function () {
     fill("red");
     image(inst[18], 200,150);
     image(inst[14], 200,350);
+    count++;
+
     //text("cup stacking, press delete to finish", midX, midY);
 }
 
@@ -306,6 +309,8 @@ drawFillTea = function () {
     image(inst[15], 200,150);
     image(inst[14], 200,350);
     fill(0);
+    count++;
+
     //text("hold click to fill the pitcher, press delete to finish", midX, 600);
 }
 
@@ -315,6 +320,8 @@ drawRoomThree = function () {
     fill("white");
     image(inst[5], 200,150);
     image(inst[6], 200,350);
+    count++;
+
     //text("in room 3 \n to set the boba out press 'o'!", 150, 50);
 
 }
@@ -380,7 +387,9 @@ function keyTyped() {
     } 
     else if (drawFunction === drawRoomTwo) {
         if (key === 'w') {
-            drawFunction = drawRoomThree;
+            if (count >= 4){
+                drawFunction = drawRoomThree;
+            }
         }
     } 
     else if (drawFunction === drawRoomThree) {
@@ -453,10 +462,9 @@ function mousePressed() {
         }
     } 
     else if (drawFunction === drawRoomTwo) {
-        if (mouseX > 653 && mouseX < 770) { // click on cashier machine
-            if (mouseY > 500 && mouseY < 550) {
+        if (mouseX > 640 && mouseX < 770) { // click on cashier machine
+            if (mouseY > 450 && mouseY < 550) {
                 if (countMoneyEnter == true) {
-                    count++;
                     drawFunction = drawCountMoney;
                 }
             }
@@ -464,15 +472,14 @@ function mousePressed() {
         else if (mouseX > 780 && mouseX < 900) { // click on menu board
             if (mouseY > 175 && mouseY < 270) {
                 if (menuBoardEnter == true) {
-                    count++;
                     drawFunction = drawMenuBoard;
+                    
                 }
             }
         } 
         else if (mouseX > 761 && mouseX < 794) { // click on cups
             if (mouseY > 270 && mouseY < 340) {
                 if (cupStackEnter == true) {
-                    count++;
                     drawFunction = drawCupStack;
                 }
             }
@@ -480,7 +487,6 @@ function mousePressed() {
         else if (mouseX > 865 && mouseX < 930) { // fill tea
             if (mouseY > 330 && mouseY < 415) {
                 if (fillTeaEnter == true) {
-                    count++;
                     drawFunction = drawFillTea;
                 }
             }
