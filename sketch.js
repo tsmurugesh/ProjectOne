@@ -81,6 +81,7 @@ function preload() {
     images[12] = loadImage('assets/money.png');
     images[13] = loadImage('assets/cups.png');
     images[14] = loadImage('assets/onecup.png');
+    images[15] = loadImage('assets/white.png');
 
     inst[0] = loadImage('assets/outside_txt2.png');
     inst[1] = loadImage('assets/rm1_txt1.png');
@@ -101,6 +102,7 @@ function preload() {
     inst[16] = loadImage('assets/fillyea_txt.png');
     inst[17] = loadImage('assets/menu_text.png');
     inst[18] = loadImage('assets/cups_txt.png');
+
 
 
 
@@ -130,7 +132,7 @@ function setup() {
 
 // Very simple, sets the background color and calls your state machine function
 function draw() {
-    background("#5fa4db");
+    //background("#5fa4db");
 
     midX = (width / 2)+150;
     midY = height / 2;
@@ -148,7 +150,7 @@ function draw() {
 
 //-- drawOuteside () will draw the image at index 0 from the array, outside of the store
 drawOutside = function () {
-    //background("#5fa4db");
+    background("#5fa4db");
     fill("white");
     if (tasksDone === false) {
         image(images[0], midX, midY);
@@ -170,7 +172,7 @@ drawOutside = function () {
 
 //-- drawRoomOne() will draw first instance of the inside of the shop, promps user to interact with the tea and boba
 drawRoomOne = function () {
-    //background("#5fa4db");
+    background("#5fa4db");
     image(images[1], midX, midY);
     //image(inst[0], 140, 370, 120, 200);
 //    fill("white");
@@ -181,6 +183,8 @@ drawRoomOne = function () {
 
 //-- drawBobaCook() user "cooks" the boba. user can pretend to stir around the pot. Press enter to finish
 drawBobaCook = function () {
+    background("#5fa4db");
+
     // limiting spoon mixing movement
     var spoonX;
     if (mouseX < 615) {
@@ -203,6 +207,8 @@ drawBobaCook = function () {
 
 //-- drawTeaSteepOne() user is timed to click all theleaves, code tracks if theuser clicked at least 5 times. if yes then user is allowed into room two, If failed then user but mouse click to try again.
 drawTeaSteepOne = function () {
+    background("#5fa4db");
+
     fill("red");
     image(images[11], midX, midY);
 
@@ -241,6 +247,8 @@ drawTeaSteepOne = function () {
 
 //-- drawRoomTwo() will draw 2nd instance of the inside of the shop where you have 4 tasks to complete
 drawRoomTwo = function () {
+    background("#5fa4db");
+
     image(images[2], midX, midY);
     image(inst[3], 200, 150);
     image(inst[4], 200, 350);
@@ -250,6 +258,8 @@ drawRoomTwo = function () {
 
 //-- drawCountMoney() user adds up all the money on screen and enters the value
 drawCountMoney = function () {
+    background("#5fa4db");
+
     countMoneyEnter = false;
     image(images[12], midX, midY);
     image(inst[15], 200, 150);
@@ -260,27 +270,35 @@ drawCountMoney = function () {
 
 //-- drawMenuBoard() user can draw on the board when mouse pressed
 drawMenuBoard = function () {
+    //background("#5fa4db");
     menuBoardEnter = false;
+    if (mouseIsPressed === true){
+            drawOverMe();
+    }
     push();
-    fill("white")
+    rectMode(CORNER);
+    fill("#5fa4db")
     //noFill();
+    //stroke("orange");
+    //strokeWeight(10);
+    noStroke();
+    rect(0, 0, 1200, 180);
+    rect(0, 0, 450, 750);
+    rect(0, 570, 1200, 180);
+    rect(1050, 0, 170, 750);
+    pop();
+
+    push();
+    noFill();
     stroke("orange");
     strokeWeight(10);
-    rect(midX, midY, 600, 400);
+    rect(midX,midY, 600, 400);
     pop();
 
-    strokeWeight(7);
-    stroke("black");
+    // strokeWeight(7);
+    // stroke("black");
 
-    push();
-        if (mouseIsPressed === true) {
-            if (mouseX >= 450 && mouseX <=1050){
-                if (mouseY >= 180 && mouseY <=570)
-                    line(mouseX, mouseY, pmouseX, pmouseY);
-            }
         //noLoop();
-    }
-    pop();
   //   fill("blue");
   //     beginShape();
   // // Exterior part of shape, clockwise winding
@@ -304,6 +322,8 @@ drawMenuBoard = function () {
 
 
 drawCupStack = function () {
+    background("#5fa4db");
+
     cupStackEnter = false;
     image(images[13], midX, midY);
     image(images[14], a, b);
@@ -314,6 +334,8 @@ drawCupStack = function () {
 
 //-- drawFillTea() user holds down mouse to "fill" tea container
 drawFillTea = function () {
+    background("#5fa4db");
+
     fillTeaEnter = false;
     noStroke();
     fill("#d89663");
@@ -334,6 +356,8 @@ drawFillTea = function () {
 
 //-- drawRoomThree() will draw 3rd instance of the inside of the shop where you just have to set the boba out
 drawRoomThree = function () {
+    background("#5fa4db");
+
     image(images[3], midX, midY);
     fill("white");
     image(inst[5], 200, 150);
@@ -343,6 +367,8 @@ drawRoomThree = function () {
 
 //-- drawRoomFour() will draw 4th instance of the inside of the shop where you have completed everything and are asked to flip the sign
 drawRoomFour = function () {
+    background("#5fa4db");
+
     image(images[4], midX, midY);
     fill("white");
     image(inst[7], 200, 150);
@@ -350,6 +376,8 @@ drawRoomFour = function () {
 
 //-- drawOpen() states finished, all set up and the boba shop is now open
 drawOpen = function () {
+    background("#5fa4db");
+
     image(images[5], midX, midY);
     fill("white");
     image(inst[9], 200, 150);
@@ -357,6 +385,13 @@ drawOpen = function () {
 
 
 //========= TEMPLATE: add or change interface functions, as you like =========
+
+function drawOverMe(){
+    stroke(0);
+    strokeWeight(3);
+    frameRate(60);
+    line(mouseX,mouseY,pmouseX,pmouseY);
+}
 
 // mouse easing stuff all in one place
  function mouseEasing(){
@@ -477,6 +512,8 @@ function mousePressed() {
         else if (mouseX > 780 && mouseX < 900) { // click on menu board
             if (mouseY > 175 && mouseY < 270) {
                 if (menuBoardEnter == true) {
+                    image(images[15], midX, midY);
+
                     drawFunction = drawMenuBoard;
                     
                 }
