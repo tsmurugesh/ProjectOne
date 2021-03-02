@@ -59,6 +59,7 @@ var leafCount = 0
 var tasksDone = false
 var button, input;
 var revealSize = 100;;
+var input, button;
 
 
 // offset from bottom of screen
@@ -125,6 +126,11 @@ function setup() {
 
     // Timer  set up
     simpleTimer = new Timer(8000);
+
+    input = createInput();
+    button = createButton('enter');
+    //button.position(input.x + input.width, 10);
+    button.mousePressed(inputAction);
 
     // Set to one for startup
     drawFunction = drawOutside;
@@ -259,12 +265,14 @@ drawRoomTwo = function () {
 //-- drawCountMoney() user adds up all the money on screen and enters the value
 drawCountMoney = function () {
     background("#5fa4db");
-
     countMoneyEnter = false;
+    input.position(50, 250);
+    input.size(235);
+    button.position(input.x + input.width+10, 250);
+    //input.value('');
     image(images[12], midX, midY);
     image(inst[15], 200, 150);
     image(inst[14], 200, 350);
-    text
     //text("counting money screen, press delete to finish", midX, midY);
 }
 
@@ -294,26 +302,6 @@ drawMenuBoard = function () {
     strokeWeight(10);
     rect(midX,midY, 600, 400);
     pop();
-
-    // strokeWeight(7);
-    // stroke("black");
-
-        //noLoop();
-  //   fill("blue");
-  //     beginShape();
-  // // Exterior part of shape, clockwise winding
-  //   vertex(-width, -height);
-  //   vertex(width, -height);
-  //   vertex(width, height);
-  //   vertex(-width, height);
-  // // Interior part of shape, counter-clockwise winding
-  //   beginContour();
-  //   vertex(midX-300, midY-200);
-  //   vertex(midX+300, midY-200);
-  //   vertex(midX+300, midY+200);
-  //   vertex(midX-300, midY+200);
-  //   endContour();
-  //   endShape(CLOSE);
 
     image(inst[17], 200, 150);
     image(inst[14], 200, 350);
@@ -393,6 +381,11 @@ function drawOverMe(){
     line(mouseX,mouseY,pmouseX,pmouseY);
 }
 
+function inputAction(){
+    input.hide();
+    button.hide();
+}
+
 // mouse easing stuff all in one place
  function mouseEasing(){
    let targetX = mouseX;
@@ -407,7 +400,7 @@ function drawOverMe(){
 // Change the drawFunction variable based on your interaction
 function keyTyped() {
    if (key === '1') {
-       drawFunction = drawMenuBoard;
+       drawFunction = drawCountMoney;
    } 
 //    else if (key === '2') {
 //        drawFunction = drawRoomOne;
