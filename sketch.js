@@ -58,6 +58,8 @@ var count = 0;
 var leafCount = 0
 var tasksDone = false
 var button, input;
+var revealSize = 100;;
+
 
 // offset from bottom of screen
 var gTextOffset = 100;
@@ -129,8 +131,11 @@ function setup() {
 // Very simple, sets the background color and calls your state machine function
 function draw() {
     background("#5fa4db");
+
     midX = (width / 2)+150;
     midY = height / 2;
+    //revealsize=100;
+
 
     mouseEasing();
 
@@ -143,7 +148,8 @@ function draw() {
 
 //-- drawOuteside () will draw the image at index 0 from the array, outside of the store
 drawOutside = function () {
-    fill("white")
+    //background("#5fa4db");
+    fill("white");
     if (tasksDone === false) {
         image(images[0], midX, midY);
 //        push();
@@ -155,27 +161,22 @@ drawOutside = function () {
 //        pop();
 //        text("Good morning and welcome to \n your shift at the Sweet Time\n Boba! We have alot to do before\n opening so lets begin. Press UP\n to head inside.", 50, 90);
         image(inst[0], 200,150);
-
     } 
     else if (tasksDone === true) {
         image(images[10], midX, midY);
         image(inst[8], 200,150);
-        //text("Now all we have to do is open the store. Click the sign to flip it!", 50, 60);
     }
-    //image(inst[0],midX + 340,370, 120,200);
-
-
 }
 
 //-- drawRoomOne() will draw first instance of the inside of the shop, promps user to interact with the tea and boba
 drawRoomOne = function () {
+    //background("#5fa4db");
     image(images[1], midX, midY);
     //image(inst[0], 140, 370, 120, 200);
 //    fill("white");
 //    text("First things we must do is cook the boba and steep some tea. First press 'q' to steep the boba, then press 'p' to steep the tea", 50, 60);
     image(inst[1], 200,150);
     image(inst[2], 200,350);
-
 }
 
 //-- drawBobaCook() user "cooks" the boba. user can pretend to stir around the pot. Press enter to finish
@@ -191,14 +192,13 @@ drawBobaCook = function () {
     else {
         spoonX = mouseX;
     }
-    
+
     image(images[6], midX, midY);
     image(images[8], spoonX, midY - 100);
     image(images[7], midX, midY);
     image(inst[13], 200,150);
     fill("red");
     //text("boba cooking state, press enter when done", midX, midY);
-
 }
 
 //-- drawTeaSteepOne() user is timed to click all theleaves, code tracks if theuser clicked at least 5 times. if yes then user is allowed into room two, If failed then user but mouse click to try again.
@@ -206,11 +206,12 @@ drawTeaSteepOne = function () {
     fill("red");
     image(images[11], midX, midY);
 
+    // text box for timer
     push();
     fill("#375f91");
     stroke(255);
     strokeWeight(1);
-    rect(200,250, 300,50);
+    rect(200, 250, 300, 50);
     noStroke();
     fill(255);
     text("Time: " + Math.round(simpleTimer.getRemainingTime()), 70, 255);
@@ -219,30 +220,30 @@ drawTeaSteepOne = function () {
     if (simpleTimer.expired()) {
         if (leafCount < 5) {
             // text("FAIL, PRESS click anywhere to try again", midX, midY);
-            image(inst[12], 200,350);
+            image(inst[12], 200, 350);
             if (mouseIsPressed) {
                 simpleTimer.start();
             }
         } 
         else {
             // text("WIN PRESS ANY KEY TO CONTINUE", midX, midY);
-            image(inst[11], 200,350);
+            image(inst[11], 200, 350);
             if (keyIsPressed) {
                 drawFunction = drawRoomTwo;
             }
         }
-    } else {
+    } 
+    else {
         // text("tea steeping state, click the 5 leaves before the time runs out!", midX, midY - 100);
-        image(inst[10], 200,150);
-
+        image(inst[10], 200, 150);
     }
 }
 
 //-- drawRoomTwo() will draw 2nd instance of the inside of the shop where you have 4 tasks to complete
 drawRoomTwo = function () {
     image(images[2], midX, midY);
-    image(inst[3], 200,150);
-    image(inst[4], 200,350);
+    image(inst[3], 200, 150);
+    image(inst[4], 200, 350);
     fill("white");
 //    text("in room 2 \n click on the highilghted items to complete tasks. \n once the 4 tasks are completed, press w \n remmeber once you finish a task you cannot redo it, so make sure you do it well! ", 150, 50);
 }
@@ -251,10 +252,9 @@ drawRoomTwo = function () {
 drawCountMoney = function () {
     countMoneyEnter = false;
     image(images[12], midX, midY);
-    image(inst[15], 200,150);
-    image(inst[14], 200,350);
-
-    fill("red");
+    image(inst[15], 200, 150);
+    image(inst[14], 200, 350);
+    text
     //text("counting money screen, press delete to finish", midX, midY);
 }
 
@@ -262,21 +262,44 @@ drawCountMoney = function () {
 drawMenuBoard = function () {
     menuBoardEnter = false;
     push();
-//    fill("white")
-//    stroke("orange");
-//    strokeWeight(10);
-//    rect(midX, midY, 600, 400);
-    strokeWeight(3);
-    stroke(0);
-    if (mouseIsPressed === true) {
-        line(mouseX, mouseY, pmouseX, pmouseY);
+    fill("white")
+    //noFill();
+    stroke("orange");
+    strokeWeight(10);
+    rect(midX, midY, 600, 400);
+    pop();
+
+    strokeWeight(7);
+    stroke("black");
+
+    push();
+        if (mouseIsPressed === true) {
+            if (mouseX >= 450 && mouseX <=1050){
+                if (mouseY >= 180 && mouseY <=570)
+                    line(mouseX, mouseY, pmouseX, pmouseY);
+            }
+        //noLoop();
     }
     pop();
-    fill("red");
-    image(inst[17], 200,150);
-    image(inst[14], 200,350);
+  //   fill("blue");
+  //     beginShape();
+  // // Exterior part of shape, clockwise winding
+  //   vertex(-width, -height);
+  //   vertex(width, -height);
+  //   vertex(width, height);
+  //   vertex(-width, height);
+  // // Interior part of shape, counter-clockwise winding
+  //   beginContour();
+  //   vertex(midX-300, midY-200);
+  //   vertex(midX+300, midY-200);
+  //   vertex(midX+300, midY+200);
+  //   vertex(midX-300, midY+200);
+  //   endContour();
+  //   endShape(CLOSE);
+
+    image(inst[17], 200, 150);
+    image(inst[14], 200, 350);
     count++;
-    //text("menu board, press delete to finish", midX, midY);
 }
 
 
@@ -284,14 +307,9 @@ drawCupStack = function () {
     cupStackEnter = false;
     image(images[13], midX, midY);
     image(images[14], a, b);
-
-
-    fill("red");
-    image(inst[18], 200,150);
-    image(inst[14], 200,350);
+    image(inst[18], 200, 150);
+    image(inst[14], 200, 350);
     count++;
-
-    //text("cup stacking, press delete to finish", midX, midY);
 }
 
 //-- drawFillTea() user holds down mouse to "fill" tea container
@@ -306,47 +324,39 @@ drawFillTea = function () {
     image(images[9], midX, midY);
     fill("#5fa4db");
     rect(midX, 750, 200, 175);
-    image(inst[15], 200,150);
-    image(inst[14], 200,350);
+    rect(midX, 0, 200,175);
+
+    image(inst[15], 200, 150);
+    image(inst[14], 200, 350);
     fill(0);
     count++;
-
-    //text("hold click to fill the pitcher, press delete to finish", midX, 600);
 }
 
 //-- drawRoomThree() will draw 3rd instance of the inside of the shop where you just have to set the boba out
 drawRoomThree = function () {
     image(images[3], midX, midY);
     fill("white");
-    image(inst[5], 200,150);
-    image(inst[6], 200,350);
+    image(inst[5], 200, 150);
+    image(inst[6], 200, 350);
     count++;
-
-    //text("in room 3 \n to set the boba out press 'o'!", 150, 50);
-
 }
 
 //-- drawRoomFour() will draw 4th instance of the inside of the shop where you have completed everything and are asked to flip the sign
 drawRoomFour = function () {
     image(images[4], midX, midY);
     fill("white");
-    image(inst[7], 200,150);
-    //text("in room 4  \n great everything is all set up! press the DOWN ARROW to go outside and flip the sign!", 150, 50);
-
+    image(inst[7], 200, 150);
 }
 
 //-- drawOpen() states finished, all set up and the boba shop is now open
 drawOpen = function () {
     image(images[5], midX, midY);
     fill("white");
-    //rect(midX+80 , midY+80, 100,200);
-    image(inst[9], 200,150);
-    //text("thanks for being such a good employee. its now open!", 150, 50);
-    //image(inst[0],midX + 340,370, 120,200);
+    image(inst[9], 200, 150);
 }
 
 
-
+//========= TEMPLATE: add or change interface functions, as you like =========
 
 // mouse easing stuff all in one place
  function mouseEasing(){
@@ -359,13 +369,11 @@ drawOpen = function () {
    b += dy * easing;
  }
 
-//========= TEMPLATE: add or change interface functions, as you like =========
-
 // Change the drawFunction variable based on your interaction
 function keyTyped() {
-//    if (key === '1') {
-//        drawFunction = drawCountMoney;
-//    } 
+   if (key === '1') {
+       drawFunction = drawMenuBoard;
+   } 
 //    else if (key === '2') {
 //        drawFunction = drawRoomOne;
 //    }
@@ -397,9 +405,6 @@ function keyTyped() {
             drawFunction = drawRoomFour;
         }
     }
-    //    else if (count >= 4){
-    //        drawFunction = drawRoomThree; 
-    //    }
 }
 
 function keyPressed() {
