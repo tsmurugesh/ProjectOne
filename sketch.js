@@ -80,8 +80,16 @@ function preload() {
     images[13] = loadImage('assets/cups.png');
     images[14] = loadImage('assets/onecup.png');
 
-    inst[0] = loadImage('assets/index.png');
-    inst[1] = loadImage('assets/room1_text.png');
+    inst[0] = loadImage('assets/outside_txt2.png');
+    inst[1] = loadImage('assets/rm1_txt1.png');
+    inst[2] = loadImage('assets/rm1_txt2.png');
+    inst[3] = loadImage('assets/rm2_txt1.png');
+    inst[4] = loadImage('assets/rm2_txt2.png');
+    inst[5] = loadImage('assets/rm3_txt1.png');
+    inst[6] = loadImage('assets/rm3_txt2.png');
+    inst[7] = loadImage('assets/rm4_txt1.png');
+    inst[8] = loadImage('assets/outside_txt3.png');
+    inst[9] = loadImage('assets/open_txt1.png');
     
     myFont = loadFont('assets/ArgentPixelCF-Regular.otf');
 
@@ -125,19 +133,21 @@ drawOutside = function () {
     fill("white")
     if (tasksDone === false) {
         image(images[0], midX, midY);
-        push();
-        rectMode(CORNER);
-        fill("#324c77");
-        stroke("white");
-        strokeWeight(2);
-        rect(40, 70, 270,120,10);
-        pop();
-        text("Good morning and welcome to \n your shift at the Sweet Time\n Boba! We have alot to do before\n opening so lets begin. Press UP\n to head inside.", 50, 90);
+//        push();
+//        rectMode(CORNER);
+//        fill("#324c77");
+//        stroke("white");
+//        strokeWeight(2);
+//        rect(40, 70, 270,120,10);
+//        pop();
+//        text("Good morning and welcome to \n your shift at the Sweet Time\n Boba! We have alot to do before\n opening so lets begin. Press UP\n to head inside.", 50, 90);
+        image(inst[0], 200,150);
 
     } 
     else if (tasksDone === true) {
         image(images[10], midX, midY);
-        text("Now all we have to do is open the store. Click the sign to flip it!", 50, 60);
+        image(inst[8], 200,150);
+        //text("Now all we have to do is open the store. Click the sign to flip it!", 50, 60);
     }
     //image(inst[0],midX + 340,370, 120,200);
 
@@ -148,8 +158,10 @@ drawOutside = function () {
 drawRoomOne = function () {
     image(images[1], midX, midY);
     //image(inst[0], 140, 370, 120, 200);
-    fill("white");
-    text("First things we must do is cook the boba and steep some tea. First press 'q' to steep the boba, then press 'p' to steep the tea", 50, 60);
+//    fill("white");
+//    text("First things we must do is cook the boba and steep some tea. First press 'q' to steep the boba, then press 'p' to steep the tea", 50, 60);
+    image(inst[1], 200,150);
+    image(inst[2], 200,350);
 
 }
 
@@ -205,9 +217,10 @@ drawTeaSteepOne = function () {
 //-- drawRoomTwo() will draw 2nd instance of the inside of the shop where you have 4 tasks to complete
 drawRoomTwo = function () {
     image(images[2], midX, midY);
-    image(inst[0], 140, 370, 120, 200);
+    image(inst[3], 200,150);
+    image(inst[4], 200,350);
     fill("white");
-    text("in room 2 \n click on the highilghted items to complete tasks. \n once the 4 tasks are completed, press w \n remmeber once you finish a task you cannot redo it, so make sure you do it well! ", 150, 50);
+//    text("in room 2 \n click on the highilghted items to complete tasks. \n once the 4 tasks are completed, press w \n remmeber once you finish a task you cannot redo it, so make sure you do it well! ", 150, 50);
 }
 
 //-- drawCountMoney() user adds up all the money on screen and enters the value
@@ -269,7 +282,9 @@ drawFillTea = function () {
 drawRoomThree = function () {
     image(images[3], midX, midY);
     fill("white");
-    text("in room 3 \n to set the boba out press 'o'!", 150, 50);
+    image(inst[5], 200,150);
+    image(inst[6], 200,350);
+    //text("in room 3 \n to set the boba out press 'o'!", 150, 50);
 
 }
 
@@ -277,7 +292,8 @@ drawRoomThree = function () {
 drawRoomFour = function () {
     image(images[4], midX, midY);
     fill("white");
-    text("in room 4  \n great everything is all set up! press the DOWN ARROW to go outside and flip the sign!", 150, 50);
+    image(inst[7], 200,150);
+    //text("in room 4  \n great everything is all set up! press the DOWN ARROW to go outside and flip the sign!", 150, 50);
 
 }
 
@@ -286,7 +302,8 @@ drawOpen = function () {
     image(images[5], midX, midY);
     fill("white");
     //rect(midX+80 , midY+80, 100,200);
-    text("thanks for being such a good employee. its now open!", 150, 50);
+    image(inst[9], 200,150);
+    //text("thanks for being such a good employee. its now open!", 150, 50);
     //image(inst[0],midX + 340,370, 120,200);
 }
 
@@ -397,7 +414,7 @@ function mousePressed() {
     } 
     else if (drawFunction === drawOutside) {
         if (tasksDone === true) {
-            if (mouseX > 625 && mouseX < 750) {
+            if (mouseX > 775 && mouseX < 900) {
                 if (mouseY > 370 && mouseY < 550) {
                     drawFunction = drawOpen;
                 }
@@ -405,7 +422,7 @@ function mousePressed() {
         }
     } 
     else if (drawFunction === drawRoomTwo) {
-        if (mouseX > 503 && mouseX < 620) { // click on cashier machine
+        if (mouseX > 653 && mouseX < 770) { // click on cashier machine
             if (mouseY > 500 && mouseY < 550) {
                 if (countMoneyEnter == true) {
                     count++;
@@ -413,7 +430,7 @@ function mousePressed() {
                 }
             }
         } 
-        else if (mouseX > 630 && mouseX < 750) { // click on menu board
+        else if (mouseX > 780 && mouseX < 900) { // click on menu board
             if (mouseY > 175 && mouseY < 270) {
                 if (menuBoardEnter == true) {
                     count++;
@@ -421,7 +438,7 @@ function mousePressed() {
                 }
             }
         } 
-        else if (mouseX > 611 && mouseX < 644) { // click on cups
+        else if (mouseX > 761 && mouseX < 794) { // click on cups
             if (mouseY > 270 && mouseY < 340) {
                 if (cupStackEnter == true) {
                     count++;
@@ -429,7 +446,7 @@ function mousePressed() {
                 }
             }
         } 
-        else if (mouseX > 715 && mouseX < 780) { // fill tea
+        else if (mouseX > 865 && mouseX < 930) { // fill tea
             if (mouseY > 330 && mouseY < 415) {
                 if (fillTeaEnter == true) {
                     count++;
