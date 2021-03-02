@@ -90,6 +90,9 @@ function preload() {
     inst[7] = loadImage('assets/rm4_txt1.png');
     inst[8] = loadImage('assets/outside_txt3.png');
     inst[9] = loadImage('assets/open_txt1.png');
+    inst[10] = loadImage('assets/tea_txt1.png');
+    inst[11] = loadImage('assets/tea_txt2.png');
+    inst[12] = loadImage('assets/tea_txt3.png');
     
     myFont = loadFont('assets/ArgentPixelCF-Regular.otf');
 
@@ -103,7 +106,7 @@ function setup() {
     imageMode(CENTER);
     textAlign(LEFT);
     rectMode(CENTER);
-    textSize(22);
+    textSize(40);
     textFont(myFont);
 
     // Timer  set up
@@ -193,23 +196,34 @@ drawTeaSteepOne = function () {
     fill("red");
     image(images[11], midX, midY);
 
-    text(Math.round(simpleTimer.getRemainingTime()), 100, 100);
+    push();
+    fill("#375f91");
+    stroke(255);
+    strokeWeight(1);
+    rect(200,250, 300,50);
+    noStroke();
+    fill(255);
+    text("Time: " + Math.round(simpleTimer.getRemainingTime()), 70, 255);
+    pop();
 
     if (simpleTimer.expired()) {
         if (leafCount < 5) {
-            text("FAIL, PRESS click anywhere to try again", midX, midY);
+            // text("FAIL, PRESS click anywhere to try again", midX, midY);
+            image(inst[12], 200,350);
             if (mouseIsPressed) {
                 simpleTimer.start();
             }
         } 
         else {
-            text("WIN PRESS ANY KEY TO CONTINUE", midX, midY);
+            // text("WIN PRESS ANY KEY TO CONTINUE", midX, midY);
+            image(inst[11], 200,350);
             if (keyIsPressed) {
                 drawFunction = drawRoomTwo;
             }
         }
     } else {
-        text("tea steeping state, click the 5 leaves before the time runs out!", midX, midY - 100);
+        // text("tea steeping state, click the 5 leaves before the time runs out!", midX, midY - 100);
+        image(inst[10], 200,150);
 
     }
 }
