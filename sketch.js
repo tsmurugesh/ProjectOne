@@ -93,6 +93,16 @@ function preload() {
     inst[10] = loadImage('assets/tea_txt1.png');
     inst[11] = loadImage('assets/tea_txt2.png');
     inst[12] = loadImage('assets/tea_txt3.png');
+    inst[13] = loadImage('assets/boba_txt.png');
+    inst[14] = loadImage('assets/taskfin_txt.png');
+    inst[15] = loadImage('assets/money_text.png');
+    inst[16] = loadImage('assets/fillyea_txt.png');
+    inst[17] = loadImage('assets/menu_text.png');
+    inst[18] = loadImage('assets/cups_txt.png');
+
+
+
+
     
     myFont = loadFont('assets/ArgentPixelCF-Regular.otf');
 
@@ -172,11 +182,11 @@ drawRoomOne = function () {
 drawBobaCook = function () {
     // limiting spoon mixing movement
     var spoonX;
-    if (mouseX < 480) {
-        spoonX = 480;
+    if (mouseX < 615) {
+        spoonX = 615;
     } 
-    else if (mouseX > 715) {
-        spoonX = 715;
+    else if (mouseX > 865) {
+        spoonX = 865;
     } 
     else {
         spoonX = mouseX;
@@ -185,9 +195,9 @@ drawBobaCook = function () {
     image(images[6], midX, midY);
     image(images[8], spoonX, midY - 100);
     image(images[7], midX, midY);
-
+    image(inst[13], 200,150);
     fill("red");
-    text("boba cooking state, press enter when done", midX, midY);
+    //text("boba cooking state, press enter when done", midX, midY);
 
 }
 
@@ -241,9 +251,11 @@ drawRoomTwo = function () {
 drawCountMoney = function () {
     countMoneyEnter = false;
     image(images[12], midX, midY);
+    image(inst[15], 200,150);
+    image(inst[14], 200,350);
 
     fill("red");
-    text("counting money screen, press delete to finish", midX, midY);
+    //text("counting money screen, press delete to finish", midX, midY);
 }
 
 //-- drawMenuBoard() user can draw on the board when mouse pressed
@@ -261,7 +273,9 @@ drawMenuBoard = function () {
     }
     pop();
     fill("red");
-    text("menu board, press delete to finish", midX, midY);
+    image(inst[17], 200,150);
+    image(inst[14], 200,350);
+    //text("menu board, press delete to finish", midX, midY);
 }
 
 
@@ -272,7 +286,9 @@ drawCupStack = function () {
 
 
     fill("red");
-    text("cup stacking, press delete to finish", midX, midY);
+    image(inst[18], 200,150);
+    image(inst[14], 200,350);
+    //text("cup stacking, press delete to finish", midX, midY);
 }
 
 //-- drawFillTea() user holds down mouse to "fill" tea container
@@ -287,9 +303,10 @@ drawFillTea = function () {
     image(images[9], midX, midY);
     fill("#5fa4db");
     rect(midX, 750, 200, 175);
-
+    image(inst[15], 200,150);
+    image(inst[14], 200,350);
     fill(0);
-    text("hold click to fill the pitcher, press delete to finish", midX, 600);
+    //text("hold click to fill the pitcher, press delete to finish", midX, 600);
 }
 
 //-- drawRoomThree() will draw 3rd instance of the inside of the shop where you just have to set the boba out
