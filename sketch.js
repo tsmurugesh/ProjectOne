@@ -235,6 +235,8 @@ drawCountMoney = function () {
     image(images[12], midX, midY);
     image(inst[15], 200, 150);
     image(inst[14], 200, 350);
+    count++;
+
 }
 
 //-- drawMenuBoard() user can draw on the board when mouse pressed [technically drawing in the background]
@@ -317,7 +319,6 @@ drawRoomThree = function () {
 
     image(inst[5], 200, 150);
     image(inst[6], 200, 350);
-    count++;
 }
 
 //-- drawRoomFour() will draw 4th instance of the inside of the shop where you have completed everything and are asked to flip the sign
