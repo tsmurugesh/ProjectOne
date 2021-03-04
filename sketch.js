@@ -31,17 +31,16 @@ var cursor;
 var drawFunction;
 
 // various variable initializations
-var midY;
-var simpleTimer;
+var midY, midX;
+var simpleTimer, input, button, sound1, sound2;
 var r = 1;
 var countMoneyEnter = true;
 var menuBoardEnter = true;
 var cupStackEnter = true;
 var fillTeaEnter = true;
+var tasksDone = false;
 var count = 0;
-var leafCount = 0
-var tasksDone = false
-var input, button;
+var leafCount = 0;
 
 // load all images and text into an array
 function preload() {
@@ -83,6 +82,9 @@ function preload() {
     inst[16] = loadImage('assets/fillyea_txt.png');
     inst[17] = loadImage('assets/menu_text.png');
     inst[18] = loadImage('assets/cups_txt.png');
+
+    sound1 = loadSound("assets/blip1.mp3");
+    sound2 = loadSound("assets/blip2.mp3");
     
     myFont = loadFont('assets/ArgentPixelCF-Regular.otf');
 
@@ -109,13 +111,14 @@ function setup() {
     input.hide();
     button.hide();
 
+    //sound set up
+
     // Set to one for startup
     drawFunction = drawOutside;
 }
 
 // Very simple, sets the background color and calls your state machine function
 function draw() {
-    //background("#5fa4db");
     midX = ( width / 2 )+150;
     midY = height / 2;
 
@@ -180,6 +183,7 @@ drawTeaSteepOne = function () {
 
     image(images[11], midX, midY);
 
+
     // text box for timer
     push();
     fill("#375f91");
@@ -191,11 +195,11 @@ drawTeaSteepOne = function () {
     text("Time: " + Math.round(simpleTimer.getRemainingTime()), 70, 255);
     pop();
 
+    // determines what page user can go to based on number of clicks
     if (simpleTimer.expired()) {
         if ( leafCount < 5 ) {
             image(inst[12], 200, 350);
             if ( mouseIsPressed ) {
-                simpleTimer.start();
             }
         } 
         else {
@@ -299,7 +303,7 @@ drawFillTea = function () {
     rect(midX, 750, 200, 175);
     rect(midX, 0, 200,175);
 
-    image(inst[15], 200, 150);
+    image(inst[16], 200, 150);
     image(inst[14], 200, 350);
     fill(0);
     count++;
@@ -362,6 +366,7 @@ function inputAction(){
 
 // Change the drawFunction variable based on your interaction
 function keyTyped() {
+    sound2.play();
     if ( drawFunction === drawRoomOne ) {
         if ( key === 'q' ) {
             drawFunction = drawBobaCook;
@@ -386,6 +391,7 @@ function keyTyped() {
 }
 
 function keyPressed() {
+    sound2.play();
     if ( drawFunction === drawOutside ) {
         if ( keyCode === UP_ARROW ) {
             drawFunction = drawRoomOne;
@@ -430,6 +436,7 @@ function keyPressed() {
 }
 
 function mousePressed() {
+    sound1.play();
     if ( drawFunction === drawTeaSteepOne ) {
         if ( mouseIsPressed = true ) {
             leafCount++;
