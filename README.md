@@ -1,4 +1,4 @@
-## Simple State Machine with Splash
+## Project One
 #### by Tanvi Murugesh
 
 ### Overview
