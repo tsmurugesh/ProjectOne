@@ -85,6 +85,7 @@ function preload() {
 
     sound1 = loadSound("assets/blip1.mp3");
     sound2 = loadSound("assets/blip2.mp3");
+    mySong = loadSound("assets/bobatunes.mp3");
     
     myFont = loadFont('assets/ArgentPixelCF-Regular.otf');
 
@@ -112,6 +113,7 @@ function setup() {
     button.hide();
 
     //sound set up
+    playSound();
 
     // Set to one for startup
     drawFunction = drawOutside;
@@ -135,7 +137,7 @@ function draw() {
 drawOutside = function () {
     background("#5fa4db");
 
-    // Occurs twice, ocne at thebegnning and once at the very end when all tasks are done
+    // Occurs twice, once at thebegnning and once at the very end when all tasks are done, depending on the boolean variable
     if ( tasksDone === false ) {
         image(images[0], midX, midY);
         image(inst[0], 200, 150);
@@ -146,7 +148,7 @@ drawOutside = function () {
     }
 }
 
-//-- drawRoomOne() will draw first instance of the inside of the shop, promps user to interact with the tea and boba
+//-- drawRoomOne() will draw first instance of the inside of the shop, promps user to interact with the tea and boba using p and q keys
 drawRoomOne = function () {
     background("#5fa4db");
 
@@ -159,7 +161,7 @@ drawRoomOne = function () {
 drawBobaCook = function () {
     background("#5fa4db");
 
-    // limiting spoon mixing movement
+    // limiting spoon mixing movement depending on mouseX location
     var spoonX;
     if ( mouseX < 615 ) {
         spoonX = 615;
@@ -196,10 +198,12 @@ drawTeaSteepOne = function () {
     pop();
 
     // determines what page user can go to based on number of clicks
+    // if the timer has expired, if clicks 5+ then the else statement is displayed, allowing the user to move on, otherwise the timer restarts on mouse click
     if (simpleTimer.expired()) {
         if ( leafCount < 5 ) {
             image(inst[12], 200, 350);
             if ( mouseIsPressed ) {
+                simpleTimer.start();
             }
         } 
         else {
@@ -228,6 +232,7 @@ drawCountMoney = function () {
     background("#5fa4db");
 
     countMoneyEnter = false;
+    // input box to enter the number, no right or wrong answer
     input.position(50, 250);
     input.size(235);
     button.position(input.x + input.width+10, 250);
@@ -239,7 +244,7 @@ drawCountMoney = function () {
 
 }
 
-//-- drawMenuBoard() user can draw on the board when mouse pressed [technically drawing in the background]
+//-- drawMenuBoard() user can draw on the board when mouse pressed [technically drawing in the background, as there ar rectangle overlays on top of it]
 drawMenuBoard = function () {
     menuBoardEnter = false;
 
@@ -311,7 +316,7 @@ drawFillTea = function () {
     count++;
 }
 
-//-- drawRoomThree() will draw 3rd instance of the inside of the shop where you just have to set the boba out
+//-- drawRoomThree() will draw 3rd instance of the inside of the shop where you just have to set the boba out by pressing w
 drawRoomThree = function () {
     background("#5fa4db");
 
@@ -342,6 +347,7 @@ drawOpen = function () {
 
 //========= TEMPLATE: add or change interface functions, as you like =========
 
+// allowed user todraw on the menu board state
 function drawOverMe(){
     stroke(0);
     strokeWeight(3);
@@ -349,9 +355,16 @@ function drawOverMe(){
     line(mouseX, mouseY, pmouseX, pmouseY);
 }
 
+// when putput submit is clicked it disappears off the page
 function inputAction(){
     input.hide();
     button.hide();
+}
+
+//plays music in the backgroung
+function playSound(){
+    mySong.play();
+    mySong.loop();
 }
 
 // mouse easing stuff all in one place
